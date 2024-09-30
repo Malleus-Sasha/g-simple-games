@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="./index.js"></script>
+</head>
+
+<body>
+
+
+  <div id="todo-list"></div>
+
+  <hr/>
+
+  <form id="edit-form">
+    <div class="form-control">
+      <div class="h2">Category</div>
+      <input type="search" class="input-text">
+      <div class="categories">
+        <input type="radio" name="categories" hidden id="household">
+        <label for="household">Household</label>
+        <input type="radio" name="categories" hidden id="work">
+        <label for="work">Work</label>
+        <input type="radio" name="categories" hidden id="fitnes">
+        <label for="fitnes">Fitnes</label>
+      </div>
+    </div>
+    <div class="form-control">
+      <label class="label">Title 1</label>
+      <input type="text" name="title" class="input-text">
+    </div>
+    <div class="form-control">
+      <label class="label">Description</label>
+      <textarea rows="4" name="desc" class="input-text"></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button class="button secondary" type="button">
+        <svg class="svg-icon">
+          <use href="icons.svg#check"></use>
+        </svg>
+        Close
+      </button>
+      <button class="button primary" type="submit" >
+        <svg class="svg-icon"><use viewBox="0 0 32 32" xlink:href="icons.svg#check"></use></svg>
+        Save
+      </button>
+    </div>
+  </form>
+
+  <!-- TTTTTTTTTTTTTTTTT -->
+  <!-- TEMP -->
+  <template id="todo-list-item-template">
+    <div class="todo-item">
+      <div class="tags">
+        <div class="tag">Fitnes</div>
+      </div>
+      <!-- II -->
+      <div class="actions">
+        <button class="button svg-icon" data-action="edit">
+          <svg class="svg-icon"><use href="icons.svg#edit"></use></svg>
+        </button>
+        <button class="button" type="button">
+          <svg class="svg-icon">
+            <use href="icons.svg#delete"></use>
+          </svg>
+          Click me
+        </button>
+      </div>
+      <!-- III -->
+      <div class="content">
+        <div class="h2 title">Title</div>
+        <p class="desc">Description</p>
+      </div>
+
+      <button class="button primary" type="button">
+        <svg class="svg-icon">
+          <use href="icons.svg#check"></use>
+        </svg>
+        Close
+      </button>
+
+    </div>
+  </template>
+
+
+  <!-- <div class="h1">Head 1</div>
+    <div class="h2">Head 2</div>
+    <input class="input-text" type="text">
+    <textarea class="input-text" rows="4"></textarea>
+    <label class="label">label</label>
+    <div class="tag">tag</div>
+
+    <button class="button primary" type="button">
+        <svg class="svg-icon"><use href="icons.svg#check"></use></svg>
+        Click me  
+    </button> -->
+
+  <!-- <div class="h1">Todo List</div>
+  <search>
+    <form>
+      <input type="search" class="input-text">
+      <div class="categories">
+        <input type="radio" name="categories" hidden id="household">
+        <label for="household">House hold</label>
+        <input type="radio" name="categories" hidden id="work">
+        <label for="work">Work</label>
+        <input type="radio" name="categories" hidden id="fitnes">
+        <label for="fitnes">Fitnes</label>
+      </div>
+    </form>
+  </search> -->
+
+</body>
+
+</html>
