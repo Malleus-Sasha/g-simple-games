@@ -7,7 +7,7 @@
 html {
   --light-primary: #FFFFFF;
   --light-secondary: #E2E2E2;
-  --dark-primaryL: #999999;
+  --dark-primaryL: #333333;
   --dark-secondary: #999999;
   --main-accent: #FF6600;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -91,11 +91,21 @@ input[type=checkbox]+label {
     background: none;
     color: var(--dark-primaryL);
   }
+
+  &.icon-btn {
+    color: var(--dark-primaryL);
+    background: none;
+    padding: 2px;
+  }
+
+  & > svg {
+    pointer-events: none;
+  }
 }
 
 .svg-icon {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   color: var(--dark-primaryL);
   background: none;
   padding: 2px;
@@ -159,10 +169,16 @@ input[type=checkbox]+label {
 .form-control {
   display: flex;
   flex-direction: column;
-  gap 12px
+  gap: 12px;
 }
 
 #edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#todo-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
