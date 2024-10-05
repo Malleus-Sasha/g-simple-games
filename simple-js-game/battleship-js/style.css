@@ -1,0 +1,107 @@
+:root {
+  --main-padding: 8px;
+  --main-bg: #F3F3F3;
+  --container-bg: yellow;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background-color: var(--main-bg);
+  font-family: Montserrat, sans-serif;
+}
+
+.nav-battleship-image {
+  display: inline-block;
+  width: 150px;
+}
+
+.game-info {
+  display: grid;
+  gap: var(--main-padding);
+  grid-auto-flow: column;
+}
+
+#gamesboard-container {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  margin: var(--main-padding) auto;
+}
+
+.game-board {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.block {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
+#option-container {
+  display: flex;
+  align-items: center;
+  width: 500px;
+  height: 60px;
+  margin: 30px auto;
+  background-color: var(--container-bg);
+}
+
+.destroyer {
+  background-color: brown;
+}
+
+.submarine {
+  background-color: green;
+}
+
+.cruiser {
+  background-color: purple;
+}
+
+.battleship {
+  background-color: orange;
+}
+
+.carrier {
+  background-color: blue;
+}
+
+.destroyer-preview {
+  width: 20px;
+  height: 10px;
+  margin: 3px;
+}
+
+.submarine-preview {
+  width: 30px;
+  height: 10px;
+  margin: 3px;
+}
+
+.cruiser-preview {
+  width: 30px;
+  height: 10px;
+  margin: 3px;
+}
+
+.battleship-preview {
+  width: 40px;
+  height: 10px;
+  margin: 3px;
+}
+
+.carrier-preview {
+  width: 50px;
+  height: 10px;
+  margin: 3px;
+}
