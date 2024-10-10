@@ -53,17 +53,14 @@ const ships = [destroyer, submarine, cruiser, battleship, carrier];
 let notDropped;
 
 /**
- *  @user: 'player' | 'computer'
- */
-function addShipPiece(user, ship, startId) {
-  const allBoardBlocks = document.querySelectorAll(`#${user} div`);
-  let randomBoolean = Math.random() < 0.5;
-  let isHorizontal = user === 'player' ? angle === 0 : randomBoolean;
-  let randomStartIndex = Math.floor(Math.random() * width * width);
-  let startIndex = startId ? startId : randomStartIndex;
-
-  // !!! 1 +-
-  let validStart = isHorizontal ? startIndex <= width * width - ship.length ? startIndex : width * width - ship.length : 
+ * @param allBoardBlocks 
+* @return { shipBlocks , valid, notTaken }
+**/
+function getValidity(allBoardBlocks, isHorizontal, startIndex, ship) {
+  let valid;
+  let validStart = isHorizontal 
+  ? startIndex <= width * width - ship.length 
+    ? startIndex : width * width - ship.length : 
       // handle vertical (width * ship.length) - last dot
       startIndex <= width * width - width * ship.length ? startIndex :
       // Added vertical line
@@ -79,9 +76,6 @@ function addShipPiece(user, ship, startId) {
     }
   }
 
-  let valid;
-
-  // !!! 2 -
   if (isHorizontal) {
     valid = shipBlocks.every((_shipBlock, index) => shipBlocks[0].id % width !== width - (shipBlocks.length - (index + 1)));
   } else {
@@ -90,6 +84,21 @@ function addShipPiece(user, ship, startId) {
 
   const notTaken = shipBlocks.every(shipBlock => !shipBlock.classList.contains('taken'));
 
+  return { shipBlocks, valid, notTaken };
+}
+
+/**
+ *  @user: 'player' | 'computer'
+ */
+function addShipPiece(user, ship, startId) {
+  const allBoardBlocks = document.querySelectorAll(`#${user} div`);
+  let randomBoolean = Math.random() < 0.5;
+  let isHorizontal = user === 'player' ? angle === 0 : randomBoolean;
+  let randomStartIndex = Math.floor(Math.random() * width * width);
+  let startIndex = startId ? startId : randomStartIndex;
+
+  const { shipBlocks, valid, notTaken } = getValidity(allBoardBlocks, isHorizontal, startIndex, ship);
+
   if (valid && notTaken) {
     shipBlocks.forEach(block => {
       // console.log('BLOCK: ', block);
@@ -97,7 +106,7 @@ function addShipPiece(user, ship, startId) {
       block.classList.add('taken');
     })
   } else {
-    // if (user === 'computer') addShipPiece(ship);
+    if (user === 'computer') addShipPiece(user, ship, startId);
     if (user == 'player') notDropped = true;
   }
   
@@ -132,15 +141,32 @@ function dragStart(e) {
 function dragOver(e) {
   console.log('dragOver');
   e.preventDefault();
+  const ship = ships[draggedShip.id];
+  highlightAreas(e.target.id, ship);
 }
 
 function dropShip(e) {
   console.log('dropShip');
   const startId = e.target.id;
-  const ship = ship[draggedShip.id];
+  const ship = ships[draggedShip.id];
   addShipPiece('player', ship, startId);
   if (!notDropped) {
     draggedShip.remove();
+  }
+}
+
+// ******* Add Highlight *******
+function highlightAreas(startIndex, ship) {
+  const allBoardBlocks = document.querySelectorAll('#playyer div');
+  let isHorizontal = angle === 0;
+
+  const { shipBlocks, valid, notTaken } = getValidity(allBoardBlocks, isHorizontal, startIndex, ship);
+
+  if (valid && notTaken) {
+    shipBlocks.forEach(shipBlock => {
+      shipBlock.classList.add('hover');
+      setTimeout(() => shipBlock.classList.remove('hover'), 500);
+    })
   }
 }
 
