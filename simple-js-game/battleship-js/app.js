@@ -50,19 +50,24 @@ const battleship = new Ship('battleship', 4);
 const carrier = new Ship('carrier', 5);
 
 const ships = [destroyer, submarine, cruiser, battleship, carrier];
+let notDropped;
 
-function addShipPiece(ship) {
-  const allBoardBlocks = document.querySelectorAll('#computer > div');
+/**
+ *  @user: 'player' | 'computer'
+ */
+function addShipPiece(user, ship, startId) {
+  const allBoardBlocks = document.querySelectorAll(`#${user} div`);
   let randomBoolean = Math.random() < 0.5;
-  let isHorizontal = randomBoolean;
+  let isHorizontal = user === 'player' ? angle === 0 : randomBoolean;
   let randomStartIndex = Math.floor(Math.random() * width * width);
-  let validStart = isHorizontal 
-    // Last vertical
-    ? randomStartIndex <= width * width - ship.length 
-    ? randomStartIndex : width * width - ship.length : 
-      // handle vertical
-      randomStartIndex <= width * width - width * ship.length ? randomStartIndex :
-       randomStartIndex - ship.length * width + width; 
+  let startIndex = startId ? startId : randomStartIndex;
+
+  // !!! 1 +-
+  let validStart = isHorizontal ? startIndex <= width * width - ship.length ? startIndex : width * width - ship.length : 
+      // handle vertical (width * ship.length) - last dot
+      startIndex <= width * width - width * ship.length ? startIndex :
+      // Added vertical line
+      startIndex - ship.length * width + width; 
 
   let shipBlocks = [];
 
@@ -76,6 +81,7 @@ function addShipPiece(ship) {
 
   let valid;
 
+  // !!! 2 -
   if (isHorizontal) {
     valid = shipBlocks.every((_shipBlock, index) => shipBlocks[0].id % width !== width - (shipBlocks.length - (index + 1)));
   } else {
@@ -91,7 +97,8 @@ function addShipPiece(ship) {
       block.classList.add('taken');
     })
   } else {
-    addShipPiece(ship)
+    // if (user === 'computer') addShipPiece(ship);
+    if (user == 'player') notDropped = true;
   }
   
   console.log('Rand: ', randomStartIndex);
@@ -99,10 +106,44 @@ function addShipPiece(ship) {
 }
 
 
-ships.forEach(ship => addShipPiece(ship));
+ships.forEach(ship => addShipPiece('computer', ship));
 
 flipButton.addEventListener('click', flip);
 // refreshButton.addEventListener('click', () => addShipPiece(destroyer));
 
+// ****** Drag player ships ************
+const optionShips = Array.from(optionContainer.children);
+const allPlayerBlocks = document.querySelectorAll('#player > div');
+let draggedShip;
+
+optionShips.forEach(ship => ship.addEventListener('dragstart', dragStart));
+
+allPlayerBlocks.forEach(block => {
+  block.addEventListener('dragover', dragOver);
+  block.addEventListener('drop', dropShip);
+});
+
+function dragStart(e) {
+  console.log('drapStart: ', e);
+  notDropped  = false;
+  draggedShip = e.target;
+}
+
+function dragOver(e) {
+  console.log('dragOver');
+  e.preventDefault();
+}
+
+function dropShip(e) {
+  console.log('dropShip');
+  const startId = e.target.id;
+  const ship = ship[draggedShip.id];
+  addShipPiece('player', ship, startId);
+  if (!notDropped) {
+    draggedShip.remove();
+  }
+}
+
+// T 1 . 00 . 10
 
 
