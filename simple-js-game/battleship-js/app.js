@@ -3,6 +3,7 @@ const optionContainer = document.querySelector('#option-container');
 const turnDisplay = document.querySelector('#turn-display');
 const infoDisplay = document.querySelector('#info');
 // *** Buttons
+const addButton = document.getElementById('add-button');
 const flipButton = document.querySelector('#flip-button');
 const refreshButton = document.querySelector('#refresh-button');
 const startButton = document.querySelector('#start-button');
@@ -114,11 +115,13 @@ function addShipPiece(user, ship, startId) {
     if (user == 'player') notDropped = true;
   }
   
-  console.log('Rand: ', randomStartIndex);
-  console.log('s blocks: ', shipBlocks);
+  // console.log('Rand: ', randomStartIndex);
+  // console.log('s blocks: ', shipBlocks);
 }
 
 
+// ===== ADD Ships ===
+console.log('=ADD SHIPS=');
 ships.forEach(ship => addShipPiece('computer', ship));
 
 // ****** Drag player ships ************
@@ -195,6 +198,7 @@ function handleClick(e) {
       classes = classes.filter(className => className !== 'boom');
       classes = classes.filter(className => className !== 'taken');
       playerHits.push(...classes);
+      checkScore();
       console.table(playerHits);
     }
 
@@ -210,10 +214,63 @@ function handleClick(e) {
   }
 }
 
+// ******* Define the computers GO *******
+function computerGo() {
+  if (!gameOver) {
+    turnDisplay.textContent = 'Computer Go!';
+    infoDisplay.textContent = 'The computer is thinking...';
+
+    setTimeout(() => {
+      let randS = Math.random();
+      let randomGo = Math.floor(randS * width * width);
+      console.log(':computer.go:', randomGo, randS);
+      const allBoardBlocks = document.querySelectorAll('#player div');
+
+      if (allBoardBlocks[randomGo].classList.contains('taken') && allBoardBlocks[randomGo].classList.contains['boom']) {
+        computerGo();
+        return;
+      } else if (allBoardBlocks[randomGo].classList.contains('taken') && !allBoardBlocks[randomGo].classList.contains['boom']) {
+        allBoardBlocks[randomGo].classList.add('boom');
+        infoDisplay.textContent = 'The computer hit your ship!';
+
+        let classes = Array.from(e.target.classList);
+        classes = classes.filter(className => className != 'block');
+        classes = classes.filter(className => className !== 'boom');
+        classes = classes.filter(className => className !== 'taken');
+        computerHits.push(...classes);
+      } else {
+        infoDisplay.textContent = 'Nothing hit this time.';
+        allBoardBlocks[randomGo].classList.add('empty');
+      }
+    }, 1000);
+
+    setTimeout(() => {
+      playerTurn = true;
+      turnDisplay.textContent = 'Your Go!';
+      infoDisplay.textContent = 'Please take your go.'
+      const allBoardBlocks = document.querySelectorAll('#computer div');
+      allBoardBlocks.forEach(block => block.addEventListener('click', handleClick));
+    }, 1500);
+
+  }
+}
+
+function checkScore() {
+
+}
+
+
 // ******* Button Events *******
 flipButton.addEventListener('click', flip);
 startButton.addEventListener('click', startGame);
+addButton.addEventListener('click', () => {
+  ships.forEach(ship => addShipPiece('player', ship));
+  Array.from(optionContainer.children).forEach(el => el.remove());
+  console.dir(optionContainer.children);
+});
 // refreshButton.addEventListener('click', () => addShipPiece(destroyer));
+
+
 
 // T 1 . 18 . 10
 
