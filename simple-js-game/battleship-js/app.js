@@ -1,10 +1,14 @@
 const gamesBoardContainer = document.getElementById('gamesboard-container');
 const optionContainer = document.querySelector('#option-container');
+const turnDisplay = document.querySelector('#turn-display');
+const infoDisplay = document.querySelector('#info');
 // *** Buttons
 const flipButton = document.querySelector('#flip-button');
 const refreshButton = document.querySelector('#refresh-button');
+const startButton = document.querySelector('#start-button');
 
 let angle = 0;
+let gameOver = false;
 
 function flip() {
   const optionShips = Array.from(optionContainer.children);
@@ -117,9 +121,6 @@ function addShipPiece(user, ship, startId) {
 
 ships.forEach(ship => addShipPiece('computer', ship));
 
-flipButton.addEventListener('click', flip);
-// refreshButton.addEventListener('click', () => addShipPiece(destroyer));
-
 // ****** Drag player ships ************
 const optionShips = Array.from(optionContainer.children);
 const allPlayerBlocks = document.querySelectorAll('#player > div');
@@ -157,7 +158,7 @@ function dropShip(e) {
 
 // ******* Add Highlight *******
 function highlightAreas(startIndex, ship) {
-  const allBoardBlocks = document.querySelectorAll('#playyer div');
+  const allBoardBlocks = document.querySelectorAll('#player div');
   let isHorizontal = angle === 0;
 
   const { shipBlocks, valid, notTaken } = getValidity(allBoardBlocks, isHorizontal, startIndex, ship);
@@ -170,6 +171,50 @@ function highlightAreas(startIndex, ship) {
   }
 }
 
-// T 1 . 00 . 10
+// ******* Start Game *******
+
+function startGame() {
+  if (optionContainer.children.length != 0) {
+    infoDisplay.textContent = 'Please place all your pieces first!';
+  } else {
+    const allBoardBlocks = document.querySelectorAll('#computer div');
+    allBoardBlocks.forEach(block => block.addEventListener('click', handleClick));
+  }
+}
+
+let playerHits = [];
+let computerHits = [];
+
+function handleClick(e) {
+  if (!gameOver) {
+    if (e.target.classList.contains('taken')) {
+      e.target.classList.add('boom');
+      infoDisplay.textContent = 'You hit the computers ship!';
+      let classes = Array.from(e.target.classList);
+      classes = classes.filter(className => className != 'block');
+      classes = classes.filter(className => className !== 'boom');
+      classes = classes.filter(className => className !== 'taken');
+      playerHits.push(...classes);
+      console.table(playerHits);
+    }
+
+    if (!e.target.classList.contains('taken')) {
+      infoDisplay.textContent = 'Nothing hit this time.';
+      e.target.classList.add('empty');
+    }
+
+    playerTurn = false;
+    const allBoardBlocks = document.querySelectorAll('#computer div');
+    allBoardBlocks.forEach(block => block.replaceWith(block.cloneNode(true)));
+    setTimeout(computerGo, 3000);
+  }
+}
+
+// ******* Button Events *******
+flipButton.addEventListener('click', flip);
+startButton.addEventListener('click', startGame);
+// refreshButton.addEventListener('click', () => addShipPiece(destroyer));
+
+// T 1 . 18 . 10
 
 
