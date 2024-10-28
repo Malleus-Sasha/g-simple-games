@@ -1,0 +1,68 @@
+:root {
+  --c1: #FFB38E;
+  --c2: #FFCF9D;
+  --c3: #FFB26F;
+  --c4: #DE8F5F;
+
+  --c3-h: hsl(28, 100%, 72%);
+  --c4-h: hsl(23, 66%, 62%);
+
+  --bg-body: #fafafa;
+  --bg-primary: #fffd9d;
+
+  --pd-1: 10px;
+}
+
+body {
+  background-color: var(--bg-body);
+}
+
+/* Option */
+#option {
+  height: 50px;
+  margin: var(--pd-1) 0;
+  padding: 0 var(--pd-1);
+  gap: var(--pd-1);
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-primary);
+}
+
+.destroyer {
+  background-color: var(--c1);
+}
+
+.destroyer-preview {
+  width: 20px;
+  height: 10px;
+  background-color: var(--c1);
+}
+
+/* game */
+#game {
+  display: flex;
+  gap: 20px;
+  margin: var(--pd-1) 0;
+}
+
+.game-board {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.block {
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  border: 1px solid #000;
+}
+
+#player {
+  background-color: var(--c2);
+}
+
+#computer {
+  background-color: var(--c1);
+}
