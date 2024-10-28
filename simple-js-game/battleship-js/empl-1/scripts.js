@@ -13,7 +13,17 @@ const genBoard = (block) => {
   }
 }
 
+const dragOver = (e) => {
+  console.log(':DRAG OVER:PLAYER:', e.target);
+}
+
+
 
 // *** Init
 genBoard(playerBoardBlock);
 genBoard(computerBoardBlock);
+
+// **** Init Events
+playerBoardBlock.querySelectorAll('div').forEach((el) => {
+  el.addEventListener('dragover', dragOver);
+})
