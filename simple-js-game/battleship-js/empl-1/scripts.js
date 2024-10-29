@@ -1,4 +1,26 @@
-console.log('start js');
+console.log('---------- start js');
+
+class DisplayInfo {
+
+  constructor() {
+    this.turnBlock = document.getElementById('display-turn');
+    this.infoBlock = document.getElementById('display-info');
+  }
+
+  textInfo(text) {
+    this.infoBlock.textContent = '---';
+
+    setTimeout(() => {
+      this.infoBlock.textContent = text;
+    }, 200);
+  }
+
+  set textTurn(text) {
+    this.turnBlock.textContent = text;
+  }
+}
+// !!!
+const displayInfo = new DisplayInfo();
 
 // === Ships
 const destroyer = { name: 'destroyer', length: 2};
@@ -33,7 +55,10 @@ const getHorizontalEdges = (width) => {
 
 horizontalEdges = getHorizontalEdges(widthBoard);
 
-console.log(horizontalEdges);
+const attackShip = (element) => {
+  console.log(':attackShip', element)
+  element.target.classList.add('miss');
+}
 
 // ->
 const genBoard = (block) => {
@@ -54,10 +79,12 @@ const addShip = (start, length) => {
 }
 
 let draggedShip;
+let draggedShipBlock;
 
 const dragStart = (e) => {
   console.log('DragStart: ', e.target);
   draggedShip = listShips[e.target.id];
+  draggedShipBlock = e.target;
 }
 
 const dragOver = (e) => {
@@ -68,12 +95,34 @@ const dragOver = (e) => {
 const dropShip = (e) => {
   console.log(':Drop Ship: ', e.target);
   addShip(e.target.id, draggedShip.length);
+  draggedShipBlock.remove();
+  shipsAddedToBoard.added += 1;
+  console.log(shipsAddedToBoard)
 }
 
+// ========= GAME =========
+const shipsAddedToBoard = {
+  added: 0,
+  shouldAdded: 2,
+};
+
+const startBtn = document.getElementById('btn-start');
+
+function startGame() {
+  console.log(':log start:');
+  if (shipsAddedToBoard.added == shipsAddedToBoard.shouldAdded) {
+    console.log(':Game Start');
+    displayInfo.infoBlock('The game has started!');
+  } else {
+    console.log(':Add ships');
+    displayInfo.textInfo('Please place all your pieces first!');
+  }
+}
 // ====== =====
 // *** Init
 genBoard(playerBoardBlock);
 genBoard(computerBoardBlock);
+displayInfo.textTurn = 'Your Go!';
 
 // **** Init Events
 optionShips.forEach((ship) => ship.addEventListener('dragstart', dragStart));
@@ -81,4 +130,8 @@ optionShips.forEach((ship) => ship.addEventListener('dragstart', dragStart));
 playerBoardBlock.querySelectorAll('div').forEach((el) => {
   el.addEventListener('dragover', dragOver);
   el.addEventListener('drop', dropShip);
+
+  el.addEventListener('click', attackShip)
 })
+
+startBtn.addEventListener('click', startGame);

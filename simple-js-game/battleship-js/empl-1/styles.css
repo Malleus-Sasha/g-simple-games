@@ -52,17 +52,29 @@ body {
 }
 
 .game-board {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   display: flex;
   flex-wrap: wrap;
 }
 
 .block {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   border: 1px solid #000;
+}
+
+.miss::after {
+  content: '';
+  width: 15px;
+  height: 15px;
+  display: block;
+  border-radius: 50%;
+  background-color: #fafafa;
 }
 
 #player {
