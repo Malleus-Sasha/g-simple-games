@@ -38,6 +38,12 @@ body {
   background-color: var(--c1);
 }
 
+.cruiser-preview {
+  width: 60px;
+  height: 20px;
+  background-color: var(--c1);
+}
+
 /* game */
 #game {
   display: flex;
@@ -65,4 +71,8 @@ body {
 
 #computer {
   background-color: var(--c1);
+}
+
+#player > .taken {
+  background-color: var(--c4);
 }

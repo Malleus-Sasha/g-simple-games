@@ -13,9 +13,9 @@ body {
   position: absolute;
   opacity: .25;
   bottom: 5vh;
-  /* right: 10px; */
-  left: 10vw;
-  width: 90%;
+  right: 0;
+  left: 20vw;
+  width: 100%;
   transform: rotateY(180deg);
   pointer-events: none;
 }
