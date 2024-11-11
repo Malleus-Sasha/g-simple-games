@@ -112,7 +112,7 @@ function startGame() {
   console.log(':log start:');
   if (shipsAddedToBoard.added == shipsAddedToBoard.shouldAdded) {
     console.log(':Game Start');
-    displayInfo.infoBlock('The game has started!');
+    displayInfo.textInfo('The game has started!');
   } else {
     console.log(':Add ships');
     displayInfo.textInfo('Please place all your pieces first!');
