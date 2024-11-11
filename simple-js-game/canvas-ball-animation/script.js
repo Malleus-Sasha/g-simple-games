@@ -82,7 +82,7 @@ function animate() {
       ctrls[p].x,
       ctrls[p].y,
       (ctrls[p].x + ctrls[q].x)/2,
-      (ctrls[p].y + ctrls[q].y/2)
+      (ctrls[p].y + ctrls[q].y)/2
     );
     ctrls[p].update();
   }
