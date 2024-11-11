@@ -53,6 +53,8 @@ window.onload = function(){
         ctrls.push(new Point());
     }
 
+    console.log('C:', ctrls);
+
     function animate(){
         ctx.fillStyle = "rgba(0,0,0,0.04)";
         ctx.fillRect(0, 0, W, H);
