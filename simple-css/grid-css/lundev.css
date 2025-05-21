@@ -1,0 +1,144 @@
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+.container {
+  padding: 5px;
+  display: grid;
+  grid-gap: 5px;
+  /* grid-template-rows: 100px 100px 100px 50px; */
+  grid-template-rows: repeat(5, 50px);
+  grid-template-columns: repeat(4, 50px) 1fr;
+  grid-template-areas:
+  " item3 .     .     .     .    ."
+  " item3 .     item2 .     .    ."
+  " item3 .     item1 .     .    ."
+  " .     .     item4 .     .    ."
+  " .     .     .     .     .    ."
+  " .     .     .     .     .    ."
+  ;
+}
+
+.container {
+  /* height: 2000px; */
+  border: 1px solid #ddd;
+}
+
+.item {
+  border: 1px solid #cccccc;
+}
+
+/*  3 / (this position + total column) */
+/* grid-area (row-start, column-start, ...) */
+.item3 {
+  /* grid-column: 4; */
+  /* grid-column: 3 / 5; */
+  /* grid-row: 2; */
+  /* grid-area: 2 / 3 / 3 / 5; */
+  grid-area: item3
+}
+
+.item1 {
+  grid-area: item1;
+}
+
+.item2 {
+  grid-area: item2;
+}
+
+.item4 {
+  grid-area: item4;
+}
+
+/* ------------ */
+.container2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  justify-content: center;
+  gap: 20px;
+}
+
+.item-s {
+  height: 35px;
+  text-align: center;
+  background-color: #dddddd;
+}
+
+@media screen and (max-width: 1023px) {
+  .container-m {
+    grid-template-columns: repeat(3, 250px);
+  }
+}
+
+/* ----- Content ----- */
+.wrapper{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 200px 250px 150px auto;
+  grid-template-areas:
+    "header header header"
+    "fYellow fPurple fRed"
+    "signUp signUp signUp"
+    "content content content"
+  ;
+
+}
+
+.header {
+  grid-area: header;
+  background-color: aquamarine;
+}
+.feature-yellow {
+  grid-area: fYellow;
+  background-color: yellow;
+}
+
+.feature-purple {
+  grid-area: fPurple;
+  background-color: purple;
+}
+
+.feature-red {
+  grid-area: fRed;
+  background-color: red;
+}
+
+.sign-up {
+  grid-area: signUp;
+  background-color: bisque;
+}
+
+.content {
+  grid-area: content;
+  background-color: #cccccc;
+}
+
+@media screen and (max-width: 1023px) {
+  .wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 100px auto 150px 150px;
+    grid-template-areas:
+      " header  header "
+      " content content"
+      " signUp  fYellow"
+      " fRed    fPurple"
+    ;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px auto repeat(4, 100px);
+    grid-template-areas:
+      " header  "
+      " content"
+      " signUp "
+      " fYellow"
+      " fRed  " 
+      " fPurple"
+    ;
+  }
+}
