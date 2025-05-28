@@ -37,7 +37,7 @@ function fnUser(arg: User | Person) {
 }
 
 // !!! instanseof  CLASS
-class Audi {
+class AUDI {
   audiDrive() {}
 }
 
@@ -46,10 +46,41 @@ class BMW {
 }
 
 const bmw = new BMW();
-const audi = new Audi():
+const audi = new AUDI();
 
-function fnCar(arg: BMW | Audi) {
+function fnCar(arg: BMW | AUDI) {
   if (arg instanceof BMW) {
     arg.bmwDrive();
+  }
+}
+
+// extends
+interface BaseCar {
+  maxSpeed: number;
+  weight: number;
+}
+
+interface Bmw extends BaseCar {
+  type: 'bmw';
+  bmwField: string;
+}
+
+interface Audi extends BaseCar {
+  type: 'audi';
+  audiField: string;
+}
+
+type Car = Audi | Bmw;
+
+function fnF(arg: Bmw | Audi) {
+  switch(arg.type) {
+    case 'audi':
+      arg.audiField;
+      break;
+    case 'bmw':
+      arg.bmwField;
+      break;
+    default:
+      arg
   }
 }
