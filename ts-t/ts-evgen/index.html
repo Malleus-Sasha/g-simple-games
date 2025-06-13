@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+    <style></style>
+  </head>
+  <body>
+    <h1>Todo List</h1>
+
+    <div class="todo-list">
+      <div>
+        <input type="text" id="todoInput" placeholder="Enter a new task" />
+        <button id="addButton">Add</button>
+      </div>
+      <div id="counter"></div>
+      <div id="sort">
+        <select id="sortSelect">
+          <option value="none">None</option>
+          <option value="ask">Ask</option>
+          <option value="desc">Desc</option>
+        </select>
+      </div>
+      <ul class="list"></ul>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
