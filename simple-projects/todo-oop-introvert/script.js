@@ -26,7 +26,8 @@ class DOM {
   create(type, textContent, ...classNames) {
     const item = document.createElement(type);
     item.textContent = textContent
-    item.classList.add(...classNames);
+    // item.classList.add(...classNames);
+    classNames.length && (item.className = classNames.join(' '));
 
     return item;
   }
@@ -75,9 +76,13 @@ class TodoApp {
     this.todoContainer.addEventListener('click', (e) => {
       console.log(e.target);
       const el = e.target;
-      if (el) {
-
-      } 
+      if (el.classList.contains('remove-btn')) {
+        const id = Number(el.dataset.id);
+        this.removeTodo(id);
+      } else if (el.classList.contains('todo-item')) {
+        const id = Number(el.dataset.id);
+        this.toggleTodo(id);
+      }
     })
   }
 
@@ -90,17 +95,35 @@ class TodoApp {
     console.log('Add & :after:render()')
   }
 
+  removeTodo(id) {
+    this.todoList = this.todoList.filter(todo => todo.id !== id);
+    this.todosStorage.SetItem(this.todoList);
+    this.render();
+  }
+
+  toggleTodo(id) {
+    const todo = this.todoList.find(todo => todo.id === id);
+    if (todo) {
+      todo.completed = !todo.completed;
+      this.todosStorage.SetItem(this.todoList);
+      this.render();
+    }
+  }
+
   render() {
     this.todoContainer.innerHTML = '';
 
     this.todoList.forEach((todo) => {
-      const todoItem = this.dom.create('div', todo.text, 'todo-item');
+      const completed = todo.completed ? 'completed' : '';
+      const todoItem = this.dom.create('div', '', 'todo-item', completed);
       todoItem.dataset.id = todo.id;
+      const todoItemText = this.dom.create('span', todo.text);
 
       const removeBtn = this.dom.create('button', 'Delete', 'remove-btn');
       removeBtn.dataset.id = todo.id;
-      // removeBtn.disabled = !todo.completed;
+      removeBtn.disabled = !todo.completed;
 
+      todoItem.appendChild(todoItemText);
       todoItem.appendChild(removeBtn);
       this.todoContainer.appendChild(todoItem);
       console.log(todo)
