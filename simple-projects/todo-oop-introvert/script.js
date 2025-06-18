@@ -1,8 +1,34 @@
 console.log('Todo app Start');
 
+class LocalStorage {
+  #keyName;
+
+  constructor(keyName) {
+    this.#keyName = keyName;
+  }
+
+  GetItem() {
+    const items = localStorage.getItem(this.#keyName);
+    return items ? JSON.parse(items) : [];
+  }
+
+  SetItem(itemsList) { 
+    localStorage.setItem(this.#keyName, JSON.stringify(itemsList));
+  }
+}
+
 class DOM {
   query(selector) {
     return document.querySelector(selector)
+  }
+
+  // ...rest operator. ::string[]
+  create(type, textContent, ...classNames) {
+    const item = document.createElement(type);
+    item.textContent = textContent
+    item.classList.add(...classNames);
+
+    return item;
   }
 }
 
@@ -25,7 +51,9 @@ class TodoItem extends Item {
 class TodoApp {
   constructor() {
     this.dom = new DOM();
-    this.todoList = [];
+    this.todosStorage = new LocalStorage('todos');
+
+    this.todoList = this.todosStorage.GetItem();
     this.todoInput = this.dom.query('[data-add-todo-input]');
     this.todoContainer = this.dom.query('[data-todos-container]');
 
@@ -42,6 +70,14 @@ class TodoApp {
         this.addTodo(e.target.value.trim());
         this.todoInput.value = '';
       }
+    });
+
+    this.todoContainer.addEventListener('click', (e) => {
+      console.log(e.target);
+      const el = e.target;
+      if (el) {
+
+      } 
     })
   }
 
@@ -49,6 +85,7 @@ class TodoApp {
     const newTodo = new TodoItem(Date.now(), text);
 
     this.todoList.push(newTodo);
+    this.todosStorage.SetItem(this.todoList);
     this.render();
     console.log('Add & :after:render()')
   }
@@ -57,16 +94,12 @@ class TodoApp {
     this.todoContainer.innerHTML = '';
 
     this.todoList.forEach((todo) => {
-      const todoItem = document.createElement('div');
-      todoItem.textContent = todo.text
-      todoItem.classList.add('todo-item');
+      const todoItem = this.dom.create('div', todo.text, 'todo-item');
       todoItem.dataset.id = todo.id;
 
-      const removeBtn = document.createElement('button');
-      removeBtn.textContent = 'Deleted';
-      removeBtn.classList.add('remove-btn');
+      const removeBtn = this.dom.create('button', 'Delete', 'remove-btn');
       removeBtn.dataset.id = todo.id;
-      removeBtn.disabled = !todo.completed;
+      // removeBtn.disabled = !todo.completed;
 
       todoItem.appendChild(removeBtn);
       this.todoContainer.appendChild(todoItem);
