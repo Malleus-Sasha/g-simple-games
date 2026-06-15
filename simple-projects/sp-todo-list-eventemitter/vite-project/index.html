@@ -8,6 +8,25 @@
   </head>
   <body>
     <div id="app"></div>
+<!-- II -->
+    <div class="todo-list">
+      <h1>Todo List</h1>
+      <div class="line-control">
+        <input type="text" id="todoInput" placeholder="Enter a new task" />
+        <button id="addButton">Add</button>
+      </div>
+      <div id="counter-list">0</div>
+      <div id="sort">
+        <select id="sortSelect">
+          <option value="none">None</option>
+          <option value="ask">Ask</option>
+          <option value="desc">Desc</option>
+        </select>
+      </div>
+      <ul class="list"></ul>
+    </div>
     <script type="module" src="/src/main.ts"></script>
+    <!-- <script type="module" src="/src/todo-list-example/main.ts"></script> -->
+    <script type="module" src="/src/todo-list-example/main-emitter.ts"></script>
   </body>
 </html>
