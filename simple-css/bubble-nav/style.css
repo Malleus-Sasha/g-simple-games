@@ -1,0 +1,92 @@
+:root {
+  --black: #0f0f0f;
+  --gray: #3f3f3f;
+  --white: #ffffff;
+}
+
+html {
+  min-height: 100%;
+  font-family: 'Geist Sans', sans-serif;
+  font-size: 15px;
+}
+
+body {
+  background: var(--black);
+}
+
+.nav-wrap {
+  width: fit-content;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 500px;
+  border: 1px solid var(--gray);
+  box-shadow: inset 10px 0 10px black;
+  background: linear-gradient(0deg, #141414, #242424);
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: -5px;
+    background: linear-gradient(180deg, var(--gray), #212121);
+    border-radius: 500px;
+    z-index: -1;
+  }
+}
+
+.nav {
+  anchor-name: --nav;
+  width: fit-content;
+  margin: 5px;
+
+  a {
+    display: inline-block;
+    position: relative;
+    padding: 20px 50px;
+    color: var(--white);
+    text-decoration: none;
+    z-index: 10;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      inset: 0;
+      opacity: 0.2;
+    }
+
+    &.active {
+      anchor-name: --active;
+      color: var(--black);
+    }
+
+    &:hover:before {
+      anchor-name: --nav;
+    }
+  }
+}
+
+.bubble {
+  background: var(--white);
+  top: anchor(top);
+  right: anchor(right);
+  bottom: anchor(bottom);
+  left: anchor(left);
+  position: absolute;
+  border-radius: 500px;
+  transition: all 0.2s;
+
+  &.active {
+    position-anchor: --active;
+    background: linear-gradient(180deg, #f2f2f2, #b3b3b3);
+    box-shadow: inset 0 2px 7px #ffffff;
+    z-index: 2;
+  }
+
+  &.hover {
+    position-anchor: --nav;
+    background: linear-gradient(180deg, var(--gray), #212121);
+    box-shadow: inset 0 2px 7px #ffffff29;
+    z-index: 1;
+  }
+}
