@@ -7,6 +7,7 @@
   import CounterDemo from './components/Counter-demo.svelte'
   import { get } from 'svelte/store';
   import { fade } from 'svelte/transition';
+  import Input from './components/input.svelte';
 
   let countClick = $state(0);
 
@@ -31,6 +32,7 @@
   <Counter />
   <CounterDemo initial={1} increase={() => countClick++ }/>
   <div transition:fade>{countClick}</div>
+  <Input />
   <h2>TODOS:</h2>
   {#await data}
     <div>Download</div>
