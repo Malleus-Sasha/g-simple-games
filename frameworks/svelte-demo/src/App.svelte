@@ -5,6 +5,8 @@
   import Counter from './lib/Counter.svelte'
 
   import CounterDemo from './components/Counter-demo.svelte'
+
+  let countClick = $state(0);
 </script>
 
 <section id="center">
@@ -18,7 +20,8 @@
     <p>Edit <code>src/App.svelte</code> and save to test <code>HMR</code></p>
   </div>
   <Counter />
-  <CounterDemo />
+  <CounterDemo increase={() => countClick++ }/>
+  <div>{countClick}</div>
 </section>
 
 <div class="ticks"></div>
