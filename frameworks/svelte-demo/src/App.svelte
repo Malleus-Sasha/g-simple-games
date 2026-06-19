@@ -1,12 +1,21 @@
-<script>
+<script lang="ts">
   import svelteLogo from './assets/svelte.svg'
   import viteLogo from './assets/vite.svg'
   import heroImg from './assets/hero.png'
   import Counter from './lib/Counter.svelte'
 
   import CounterDemo from './components/Counter-demo.svelte'
+  import { get } from 'svelte/store';
+  import { fade } from 'svelte/transition';
 
   let countClick = $state(0);
+
+  let getTodos = async (): Promise<{ id: number; title: string}[]> => {
+    let res = await fetch('https://jsonplaceholder.typicode.com/todos');
+    return res.json();
+  }
+
+  let data = $state(getTodos());
 </script>
 
 <section id="center">
@@ -20,8 +29,18 @@
     <p>Edit <code>src/App.svelte</code> and save to test <code>HMR</code></p>
   </div>
   <Counter />
-  <CounterDemo increase={() => countClick++ }/>
-  <div>{countClick}</div>
+  <CounterDemo initial={1} increase={() => countClick++ }/>
+  <div transition:fade>{countClick}</div>
+  <h2>TODOS:</h2>
+  {#await data}
+    <div>Download</div>
+  {:then res} 
+    {#each res as todo}
+        <div>{todo}</div>
+    {/each}
+    {:catch error}
+    <div>Error</div>
+  {/await}
 </section>
 
 <div class="ticks"></div>
